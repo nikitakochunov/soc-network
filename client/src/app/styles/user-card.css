@@ -1,0 +1,58 @@
+.users-card-list {
+  display: flex;
+  flex-direction: column;
+  margin: -15px 0;
+}
+
+.user-card {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.user-card__item {
+  margin-right: 15px;
+}
+
+.user-card__item
+
+.user-card__photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: antiquewhite;
+}
+
+.photo-link {
+  display: block;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info__item {
+  margin-bottom: 8px;
+}
+
+.user-info__item:last-child {
+  margin-bottom: 0px;
+}
+
+.user-info__edu {
+  font-size: 14px;
+}
+
+.user-link {
+  color: var(--text_link);
+  font-weight: bold;
+}
+
+.user-link:hover {
+  text-decoration: underline;
+}

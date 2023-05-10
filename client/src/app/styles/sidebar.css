@@ -1,0 +1,23 @@
+.sidebar {
+
+}
+
+.sidebar__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__item {
+  display: flex;
+}
+
+.sidebar__item:hover {
+  cursor: pointer;
+  background-color: var(--background-hover);
+}
+
+.sidebar__link {
+  flex: 1;
+  padding: 5px 20px;
+  font-size: 14px;
+}

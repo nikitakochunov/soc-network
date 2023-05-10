@@ -1,0 +1,16 @@
+:root {
+  --container-width: 998px;
+  --container-padding: 15px;
+  --main-block-color: #ffffff;
+  --steel_gray-80: #e7e8ec;
+  --block-margin: 20px;
+  --header-height: 45px;
+  --background-hover: rgba(174, 183, 194, 0.12);
+  --button-color: #f0f2f5;
+  --text_link: #2a5885;
+  --main-color: #0077ff;
+  --invalid-color: #ff0051;
+  --valid-color: #14c83b;
+  --main-button-color: #447bba;
+  --main-button-color-hover: #608bbc;
+}

@@ -1,0 +1,9 @@
+.auth {}
+
+.auth__title {
+  margin-bottom: 10px;
+}
+
+.auth__text {
+  margin-top: 10px;
+}
