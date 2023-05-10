@@ -2,14 +2,17 @@ import React, { useState } from 'react'
 import Wrapper from '../common/Wrapper'
 import Button from '../common/Button'
 import Avatar from '../common/Avatar'
+import { PostsProvider, usePosts } from '../../hooks/usePosts'
 
 const AddPostForm = () => {
-  const [value, setValue] = useState('')
+  const [data, setData] = useState('')
+
+  const { createPost } = usePosts()
 
   const [isFocused, setIsFocused] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue((prevState) => e.target.value)
+    setData((prevState) => e.target.value)
 
     if (!isFocused) {
       setIsFocused(true)
@@ -22,10 +25,9 @@ const AddPostForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-
-    console.log(value)
-
-    setValue('')
+    console.log(data)
+    createPost({ value: data })
+    // setData('')
   }
 
   return (
@@ -41,7 +43,7 @@ const AddPostForm = () => {
             <textarea
               className='add-post__textarea'
               name='add-post'
-              value={value}
+              value={data}
               id='add-post'
               placeholder='Что у вас нового?'
               onChange={handleChange}

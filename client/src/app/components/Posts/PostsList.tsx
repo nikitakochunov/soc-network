@@ -2,6 +2,7 @@ import React from 'react'
 import Wrapper from '../common/Wrapper'
 import IPost from '../../interfaces/post'
 import PostsItem from './PostItem'
+import { PostsProvider } from '../../hooks/usePosts'
 
 const PostsList: React.FunctionComponent<{}> = () => {
   const posts: IPost[] = [

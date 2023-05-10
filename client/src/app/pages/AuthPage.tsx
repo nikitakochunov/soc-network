@@ -7,7 +7,7 @@ import AuthContainer from '../components/common/AuthContainer'
 import { Link } from 'react-router-dom'
 
 const AuthPage: React.FunctionComponent<{}> = () => {
-  const [type, setType] = useState<string>('register')
+  const [type, setType] = useState<string>('login')
 
   const toggleType = () => {
     setType((prevState) => (prevState === 'login' ? 'signup' : 'login'))
