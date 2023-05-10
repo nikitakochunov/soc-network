@@ -1,0 +1,12 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.page__item {
+  margin-bottom: var(--block-margin);
+}
+
+.page__item:last-child {
+  margin-bottom: 0;
+}
