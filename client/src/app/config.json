@@ -1,0 +1,4 @@
+{
+  "apiEndpoint" : "https://nk-soc-network-default-rtdb.europe-west1.firebasedatabase.app/",
+  "isFirebase": true
+}

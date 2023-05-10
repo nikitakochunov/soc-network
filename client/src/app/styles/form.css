@@ -44,3 +44,8 @@
   margin-top: 5px;
   color: var(--invalid-color);
 }
+
+.enter-error {
+  color: var(--invalid-color);
+  margin: 5px 0 15px;
+}
