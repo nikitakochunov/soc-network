@@ -2,12 +2,22 @@ import React, { useState } from 'react'
 import Wrapper from '../common/Wrapper'
 import Button from '../common/Button'
 import Avatar from '../common/Avatar'
-import { PostsProvider, usePosts } from '../../hooks/usePosts'
+import { usePosts } from '../../hooks/usePosts'
+import IUser from '../../interfaces/user'
+import { useUsers } from '../../hooks/useUser'
 
-const AddPostForm = () => {
+interface Props {
+  userId?: string
+}
+
+const AddPostForm: React.FunctionComponent<Props> = ({ userId }) => {
   const [data, setData] = useState('')
 
   const { createPost } = usePosts()
+
+  const { getUserById } = useUsers()
+
+  const user: IUser = getUserById(userId)
 
   const [isFocused, setIsFocused] = useState(false)
 
@@ -35,7 +45,7 @@ const AddPostForm = () => {
       <div className='add-post'>
         <div className='add-post__item'>
           <div className='add-post__author-photo'>
-            <Avatar />
+            <Avatar src={user.image} />
           </div>
         </div>
         <div className='add-post__item add-post-form'>

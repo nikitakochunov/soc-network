@@ -5,10 +5,10 @@ import IParams from '../interfaces/params'
 import UsersListPage from '../pages/UsersListPage'
 
 const UserLayout = () => {
-  const { user }: IParams = useParams()
+  const { userId }: IParams = useParams()
 
-  if (user === '123') {
-    return <UserPage />
+  if (userId) {
+    return <UserPage userId={userId} />
   }
 
   return <UsersListPage />
