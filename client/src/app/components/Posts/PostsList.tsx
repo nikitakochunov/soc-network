@@ -1,31 +1,33 @@
 import React from 'react'
-import Wrapper from '../common/Wrapper'
 import IPost from '../../interfaces/post'
 import PostsItem from './PostItem'
-import { PostsProvider } from '../../hooks/usePosts'
+import IUser from '../../interfaces/user'
+import { usePosts } from '../../hooks/usePosts'
+import { useUsers } from '../../hooks/useUser'
 
-const PostsList: React.FunctionComponent<{}> = () => {
-  const posts: IPost[] = [
-    {
-      id: '1',
-      author: 'Nikita Kochunov',
-      likes: '10',
-      value: 'Теперь все посты переехали в паблик',
-      createdAt: '10 May',
-    },
-    {
-      id: '2',
-      author: 'Karina Kochunov',
-      likes: '10',
-      value: 'Теперь все посты переехали в паблик',
-      createdAt: '10 May',
-    },
-  ]
+interface Props {
+  userId?: string
+}
+
+const PostsList: React.FunctionComponent<Props> = ({ userId }): any => {
+  const { posts } = usePosts()
+
+  const { getUserById } = useUsers()
+
+  if (!posts) {
+    return 'Загрузка...'
+  }
+
+  const user: IUser = getUserById(userId)
+
+  const filteredPosts: IPost[] = user
+    ? posts.filter((post: IPost) => post.userId === user._id)
+    : posts
 
   return (
     <div className='posts'>
-      {posts.map((post) => (
-        <PostsItem key={post.id} {...post} />
+      {filteredPosts.map((post) => (
+        <PostsItem key={post._id} {...post} />
       ))}
     </div>
   )

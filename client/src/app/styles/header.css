@@ -7,6 +7,7 @@
 }
 
 .nav {
+  height: var(--header-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,12 +15,9 @@
 
 }
 
-.logo {
-  /* background-color: var(--main-color); */
-}
-
 .nav__item {
   display: flex;
+  height: 100%;
 }
 
 .nav-buttons {
@@ -48,6 +46,8 @@
   width: 35px;
   height: 35px;
   margin-right: 5px;
+  border-radius: 50%;
+  background-color: antiquewhite;
 }
 
 .profile-menu__icon {
@@ -56,10 +56,11 @@
 }
 
 .nav-link {
-  padding: 8px 0px;
+  align-self: center;
 }
 
 .menu-list {
+  display: none;
   position: absolute;
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;

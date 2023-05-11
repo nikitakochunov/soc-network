@@ -3,35 +3,25 @@ import IUser from '../../interfaces/user'
 import Wrapper from '../common/Wrapper'
 import UserCard from './UserCard'
 import Divider from '../common/Divider'
+import { useUsers } from '../../hooks/useUser'
 
-const UsersList: React.FunctionComponent<{}> = () => {
-  const users: IUser[] = [
-    {
-      id: '123',
-      name: 'Nikita Kochunov',
-      edu: 'СПбГМТУ (бывш. ЛКИ)',
-      city: 'Санкт-Петербург',
-      createdAt: '123',
-    },
-    {
-      id: '124',
-      name: 'Petr Petrov',
-      edu: 'МГУ',
-      city: 'Москва',
-      createdAt: '123',
-    },
-  ]
+const UsersList: React.FunctionComponent<{}> = (): any => {
+  const { users } = useUsers()
+
+  if (!users) {
+    return 'Загрузка...'
+  }
 
   return (
     <Wrapper>
       <div className='users-card-list'>
-        {users.map((user, index) => {
+        {users.map((user: IUser, index: number) => {
           const isLast = index !== users.length - 1
 
           return (
             <>
               {!isLast ? <Divider /> : ''}
-              <UserCard key={user.id} {...user} />
+              <UserCard key={user._id} {...user} />
             </>
           )
         })}

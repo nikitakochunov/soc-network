@@ -3,14 +3,19 @@ import ProfileInfo from '../components/ProfileInfo'
 import { PostsList } from '../components/Posts'
 import AddPostForm from '../components/Posts/AddPostForm'
 import Page from '../components/common/Page'
-import { PostsProvider } from '../hooks/usePosts'
+import { useAuth } from '../hooks/useAuth'
+import { useUsers } from '../hooks/useUser'
 
-const ProfilePage: React.FunctionComponent<{}> = () => {
+interface Props {
+  userId: string
+}
+
+const ProfilePage: React.FunctionComponent<Props> = ({ userId }): any => {
   return (
-    <Page title='Никита Кочунов'>
-      <ProfileInfo />
-      <AddPostForm />
-      <PostsList />
+    <Page title='Пользователь'>
+      <ProfileInfo userId={userId} />
+      <AddPostForm userId={userId} />
+      <PostsList userId={userId} />
     </Page>
   )
 }

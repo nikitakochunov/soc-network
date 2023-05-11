@@ -1,8 +1,8 @@
 export default interface IUser {
-  id: string
+  _id: string
   name: string
   edu: string
   city: string
-  image?: string
+  image: string
   createdAt: string
 }

@@ -7,15 +7,26 @@ import likeSolidIcon from '../../../svg/heart-solid.svg'
 import Button from '../common/Button'
 import UserLink from '../common/UserLink'
 import Avatar from '../common/Avatar'
+import { useUsers } from '../../hooks/useUser'
+import IUser from '../../interfaces/user'
+import { useAuth } from '../../hooks/useAuth'
+import displayDate from '../../utils/displayDate'
 
 const PostsItem: React.FunctionComponent<IPost> = ({
-  id,
-  author,
+  _id,
+  userId,
   value,
   likes,
   createdAt,
 }) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false)
+  const { currentUser } = useAuth()
+
+  const [isLiked, setIsLiked] = useState<boolean>(
+    likes.includes(currentUser._id)
+  )
+
+  const { getUserById } = useUsers()
+  const user: IUser = getUserById(userId)
 
   const toggleLike = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -28,14 +39,14 @@ const PostsItem: React.FunctionComponent<IPost> = ({
         <div className='post'>
           <div className='post__header post-header'>
             <div className='post-header__photo'>
-              <Avatar />
+              <Avatar src={user.image} />
             </div>
             <div className='post-header__info post-header-info'>
               <div className='post-header-info__author'>
-                <UserLink text={author} to='/users/123' />
+                <UserLink text={user.name} to={'/users/' + user._id} />
               </div>
               <div className='post-header-info__date'>
-                <TextMuted>{createdAt}</TextMuted>
+                <TextMuted>{displayDate(createdAt)}</TextMuted>
               </div>
             </div>
           </div>
@@ -49,7 +60,7 @@ const PostsItem: React.FunctionComponent<IPost> = ({
                     src={isLiked ? likeSolidIcon : likeIcon}
                     alt=''
                   />
-                  <div className='post-likes__number'>{likes}</div>
+                  <div className='post-likes__number'>{likes.length}</div>
                 </div>
               </Button>
             </div>

@@ -1,5 +1,5 @@
 export default interface IParams {
-  user?: string
+  userId?: string
   feed?: string
   auth?: string
 }

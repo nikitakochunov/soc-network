@@ -10,6 +10,7 @@ interface IRegister {
   name: string
   city: string
   edu: string
+  // age: string
 }
 
 const INITIAL_STATE = {
@@ -66,6 +67,9 @@ const RegisterForm: React.FunctionComponent = () => {
     edu: {
       isRequired: { message: 'Обязательно укажите ваш универстет' },
     },
+    // age: {
+    //   isRequired: { message: 'Обязательно укажите ваш возраст' },
+    // },
   }
 
   // useEffect(() => {
