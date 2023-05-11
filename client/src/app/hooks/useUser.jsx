@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import userService from '../services/user.service'
 import { useAuth } from './useAuth'
+import postService from '../services/post.service'
 
 const UserContext = createContext()
 
@@ -99,6 +100,41 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  const addLike = async (postId) => {
+    try {
+      const currentLikes = currentUser.likes ? [...currentUser.likes] : []
+
+      const newLikes = !currentLikes.includes(postId)
+        ? [...currentLikes, postId]
+        : currentLikes
+
+      const { content } = await userService.update({
+        ...currentUser,
+        likes: newLikes,
+      })
+
+      updateUsers(content)
+    } catch (error) {
+      catchError(error)
+    }
+  }
+
+  const deleteLike = async (postId) => {
+    try {
+      const currentLikes = [...currentUser.likes]
+      const newLikes = currentLikes.filter((lId) => lId !== postId)
+
+      const { content } = await userService.update({
+        ...currentUser,
+        likes: newLikes || [],
+      })
+
+      updateUsers(content)
+    } catch (error) {
+      catchError(error)
+    }
+  }
+
   const catchError = (error) => {
     const { message } = error.response.data
     setError(message)
@@ -106,9 +142,17 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ users, getUserById, getUserFriends, addFriend, deleteFriend }}
+      value={{
+        users,
+        getUserById,
+        getUserFriends,
+        addFriend,
+        deleteFriend,
+        addLike,
+        deleteLike,
+      }}
     >
-      {children}
+      {!isLoading ? children : ''}
     </UserContext.Provider>
   )
 }

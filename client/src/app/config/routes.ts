@@ -3,6 +3,7 @@ import UserLayout from '../layouts/UserLayout'
 import FeedLayout from '../layouts/FeedLayout'
 import AuthPage from '../pages/AuthPage'
 import FriendsLayout from '../layouts/FriendsLayout'
+import LogoutLayout from '../layouts/LogoutLayout'
 
 const routes: IRoute[] = [
   {
@@ -28,6 +29,12 @@ const routes: IRoute[] = [
     component: AuthPage,
     exact: true,
     isProtected: false,
+  },
+  {
+    path: '/logout',
+    component: LogoutLayout,
+    exact: true,
+    isProtected: true,
   },
 ]
 

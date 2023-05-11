@@ -18,6 +18,10 @@ const postService = {
     const { data } = await httpService.delete(postEndpoint + id)
     return data
   },
+  update: async ({ payload, postId }) => {
+    const { data } = await httpService.patch(postEndpoint + postId, payload)
+    return data
+  },
 }
 
 export default postService

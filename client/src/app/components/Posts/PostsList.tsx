@@ -1,14 +1,18 @@
 import React from 'react'
 import PostsItem from './PostItem'
 import IPost from '../../interfaces/post'
-import { usePosts } from '../../hooks/usePosts'
+import sortByCreatedAt from '../../utils/sortByDate'
 
-const PostsList: React.FunctionComponent<{}> = (): any => {
-  const { posts } = usePosts()
+interface Props {
+  posts: IPost[]
+}
+
+const PostsList: React.FunctionComponent<Props> = ({ posts }) => {
+  const sortedPosts: IPost[] = sortByCreatedAt(posts)
 
   return (
     <div className='posts'>
-      {posts.map((post: IPost) => (
+      {sortedPosts.map((post: IPost) => (
         <PostsItem key={post._id} {...post} />
       ))}
     </div>

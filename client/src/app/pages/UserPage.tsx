@@ -1,11 +1,12 @@
 import React from 'react'
 import ProfileInfo from '../components/ProfileInfo'
-import AddPostForm from '../components/Posts/AddPostForm'
 import Page from '../components/common/Page'
 import { useUsers } from '../hooks/useUser'
 import IUser from '../interfaces/user'
 import Wrapper from '../components/common/Wrapper'
 import Posts from '../components/Posts/Posts'
+import IPost from '../interfaces/post'
+import { usePosts } from '../hooks/usePosts'
 
 interface Props {
   userId: string
@@ -15,6 +16,8 @@ const UserPage: React.FunctionComponent<Props> = ({ userId }): any => {
   const { getUserById } = useUsers()
 
   const user: IUser = getUserById(userId)
+
+  const { posts } = usePosts()
 
   if (!user) {
     return (
@@ -26,10 +29,14 @@ const UserPage: React.FunctionComponent<Props> = ({ userId }): any => {
     )
   }
 
+  const filteredPosts: IPost[] = userId
+    ? posts.filter((post: IPost) => post.userId === userId)
+    : posts
+
   return (
     <Page title={user.name}>
       <ProfileInfo userId={userId} />
-      <Posts />
+      <Posts posts={filteredPosts} />
     </Page>
   )
 }

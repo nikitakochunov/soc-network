@@ -4,12 +4,20 @@ import RegisterForm from '../components/Auth/RegisterForm'
 import Title from '../components/common/Title'
 import LoginForm from '../components/Auth/LoginForm'
 import AuthContainer from '../components/common/AuthContainer'
+import { useAuth } from '../hooks/useAuth'
+import { Redirect } from 'react-router-dom'
 
 const AuthPage: React.FunctionComponent<{}> = () => {
   const [type, setType] = useState<string>('login')
 
+  const { currentUser } = useAuth()
+
   const toggleType = () => {
     setType((prevState) => (prevState === 'login' ? 'signup' : 'login'))
+  }
+
+  if (currentUser) {
+    return <Redirect to='/' />
   }
 
   return (

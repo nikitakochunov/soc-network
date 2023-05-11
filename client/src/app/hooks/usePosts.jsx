@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useAuth } from './useAuth'
 import { nanoid } from 'nanoid'
 import Postservice from '../services/post.service'
+import postService from '../services/post.service'
 
 const PostsContext = React.createContext()
 
@@ -42,6 +43,7 @@ export const PostsProvider = ({ children }) => {
     const post = {
       ...data,
       _id: nanoid(),
+      likes: [],
       userId: currentUser._id,
       created_at: Date.now(),
     }
@@ -65,9 +67,63 @@ export const PostsProvider = ({ children }) => {
     }
   }
 
+  const addPostLike = async ({ postId, userId }) => {
+    try {
+      const currentPost = posts.find((post) => post._id === postId)
+
+      const currentLikes = currentPost.likes ? [...currentPost.likes] : []
+
+      const newLikes = !currentLikes.includes(userId)
+        ? [...currentLikes, userId]
+        : currentLikes
+
+      const { content } = await postService.update({
+        payload: {
+          ...currentPost,
+          likes: newLikes || [],
+        },
+        postId,
+      })
+
+      updatePosts(content)
+    } catch (error) {
+      catchError(error)
+    }
+  }
+
+  const deletePostLike = async ({ postId, userId }) => {
+    try {
+      const currentPost = posts.find((post) => post._id === postId)
+
+      const currentLikes = currentPost.likes ? [...currentPost.likes] : []
+      const newLikes = currentLikes.filter((lId) => lId !== userId)
+
+      const { content } = await postService.update({
+        payload: {
+          ...currentPost,
+          likes: newLikes || [],
+        },
+        postId,
+      })
+
+      updatePosts(content)
+    } catch (error) {
+      catchError(error)
+    }
+  }
+
+  const updatePosts = (data) => {
+    const newPosts = [...posts]
+    const index = newPosts.findIndex((p) => p._id === data._id)
+
+    newPosts[index] = data
+
+    setPosts(newPosts)
+  }
+
   const catchError = (error) => {
-    const { message } = error.response.data
-    setError(message)
+    console.error(error)
+    setError(error)
   }
 
   useEffect(() => {
@@ -84,6 +140,8 @@ export const PostsProvider = ({ children }) => {
         removePost,
         isLoading,
         getUserPosts,
+        addPostLike,
+        deletePostLike,
       }}
     >
       {!isLoading ? children : 'Загрузка...'}

@@ -3,5 +3,5 @@ export default interface IPost {
   userId: string
   value: string
   likes: string[]
-  createdAt: string
+  created_at: string
 }

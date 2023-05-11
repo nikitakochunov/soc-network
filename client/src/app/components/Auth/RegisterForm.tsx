@@ -3,6 +3,7 @@ import TextField from '../common/form/TextField'
 import IFormTarget from '../../interfaces/formTarget'
 import { validator } from '../../utils/validator'
 import Button from '../common/Button'
+import { useAuth } from '../../hooks/useAuth'
 
 interface IRegister {
   email: string
@@ -22,9 +23,12 @@ const INITIAL_STATE = {
 }
 
 const RegisterForm: React.FunctionComponent = () => {
+  const { signUp } = useAuth()
+
   const [data, setData] = useState<IRegister>(INITIAL_STATE)
 
   const [errors, setErrors] = useState<IRegister & object>(INITIAL_STATE)
+  const [enterError, setEnterError] = useState<string | null>(null)
   const [validFields, setValidFields] = useState<string[]>([])
 
   const handleChange = (target: IFormTarget) => {
@@ -38,6 +42,8 @@ const RegisterForm: React.FunctionComponent = () => {
     setValidFields((prevState) =>
       prevState.filter((field) => field !== target.name)
     )
+
+    setEnterError(null)
   }
 
   const validatorConfig = {
@@ -67,14 +73,7 @@ const RegisterForm: React.FunctionComponent = () => {
     edu: {
       isRequired: { message: 'Обязательно укажите ваш универстет' },
     },
-    // age: {
-    //   isRequired: { message: 'Обязательно укажите ваш возраст' },
-    // },
   }
-
-  // useEffect(() => {
-  // validate()
-  // }, [data])
 
   const validate = () => {
     const errors = validator(data, validatorConfig)
@@ -94,14 +93,16 @@ const RegisterForm: React.FunctionComponent = () => {
 
   const isValid = Object.keys(errors).length === 0
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-
-    console.log({
-      ...data,
-    })
+    try {
+      await signUp(data)
+    } catch (error: any) {
+      setEnterError(error.message)
+      setValidFields([])
+    }
   }
 
   const isValidField = (field: string): boolean => {
@@ -117,6 +118,7 @@ const RegisterForm: React.FunctionComponent = () => {
         value={data.email}
         onChange={handleChange}
         error={errors.email}
+        enterError={enterError}
         isValid={isValidField('email')}
         autoFocus
       />
@@ -127,6 +129,7 @@ const RegisterForm: React.FunctionComponent = () => {
         value={data.password}
         onChange={handleChange}
         error={errors.password}
+        enterError={enterError}
         isValid={isValidField('password')}
       />
       <TextField
@@ -136,6 +139,7 @@ const RegisterForm: React.FunctionComponent = () => {
         value={data.name}
         onChange={handleChange}
         error={errors.name}
+        enterError={enterError}
         isValid={isValidField('name')}
       />
       <TextField
@@ -145,6 +149,7 @@ const RegisterForm: React.FunctionComponent = () => {
         value={data.city}
         onChange={handleChange}
         error={errors.city}
+        enterError={enterError}
         isValid={isValidField('city')}
       />
       <TextField
@@ -154,8 +159,10 @@ const RegisterForm: React.FunctionComponent = () => {
         value={data.edu}
         onChange={handleChange}
         error={errors.edu}
+        enterError={enterError}
         isValid={isValidField('edu')}
       />
+      {enterError && <p className='enter-error'>{enterError}</p>}
       <Button type='submit' onClick={handleSubmit}>
         Отправить
       </Button>

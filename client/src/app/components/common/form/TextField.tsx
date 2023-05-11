@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import ITextField from '../../../interfaces/textField'
 
 const TextField: React.FunctionComponent<ITextField> = ({
@@ -9,6 +8,7 @@ const TextField: React.FunctionComponent<ITextField> = ({
   value,
   onChange,
   error,
+  enterError,
   isValid,
   autoFocus,
 }) => {
@@ -16,12 +16,8 @@ const TextField: React.FunctionComponent<ITextField> = ({
     onChange({ name: e.target.name, value: e.target.value })
   }
 
-  const getInputClasses = () => {
-    return ''
-  }
-
   const getValidation = () => {
-    if (error) {
+    if (error || enterError) {
       return 'form-input__item_invalid'
     }
     if (isValid) return 'form-input__item_valid'

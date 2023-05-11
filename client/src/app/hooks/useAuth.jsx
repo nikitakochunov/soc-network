@@ -40,11 +40,14 @@ export const AuthProvider = ({ children }) => {
       await createUser({
         _id: data.localId,
         email,
+        friends: [],
+        posts: [],
         image: `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1)
           .toString(36)
           .substring(7)}.svg`,
         ...rest,
       })
+      history.push('/users/' + data.localId)
       return data
     } catch (error) {
       catchError(error)
@@ -52,11 +55,7 @@ export const AuthProvider = ({ children }) => {
 
       if (code === 400) {
         if (message === 'EMAIL_EXISTS') {
-          const errorObject = {
-            email: 'Пользователь с таким email уже существует',
-          }
-
-          throw errorObject
+          throw new Error('Пользователь с таким email уже существует')
         }
       }
     }
@@ -73,7 +72,7 @@ export const AuthProvider = ({ children }) => {
       setTokens(data)
 
       await getUserData()
-
+      history.push('/users/' + currentUser._id)
       return data
     } catch (error) {
       catchError(error)
@@ -91,7 +90,7 @@ export const AuthProvider = ({ children }) => {
   const logOut = () => {
     localStorageService.removeTokens()
     setCurrentUser(null)
-    history.push('/')
+    history.push('/auth')
   }
 
   const createUser = async (data) => {
@@ -123,6 +122,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const { content } = await userService.getCurrentUser()
       setCurrentUser(content)
+      return content._id
     } catch (error) {
       catchError(error)
     } finally {

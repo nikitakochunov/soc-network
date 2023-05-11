@@ -31,9 +31,8 @@ const AddPostForm: React.FunctionComponent<{}> = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(data)
     createPost({ value: data })
-    // setData('')
+    setData('')
   }
 
   return (

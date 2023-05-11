@@ -1,30 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import TextField from '../common/form/TextField'
 import IFormTarget from '../../interfaces/formTarget'
 import { validator } from '../../utils/validator'
 import Button from '../common/Button'
-import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 
 interface IRegister {
   email: string
   password: string
-  name: string
-  city: string
-  edu: string
 }
 
 const INITIAL_STATE = {
   email: '',
   password: '',
-  name: '',
-  city: '',
-  edu: '',
 }
 
 const LoginForm: React.FunctionComponent = () => {
-  const history = useHistory()
-
   const [data, setData] = useState<IRegister>(INITIAL_STATE)
 
   const [errors, setErrors] = useState<IRegister & object>(INITIAL_STATE)
@@ -45,6 +36,8 @@ const LoginForm: React.FunctionComponent = () => {
     setValidFields((prevState) =>
       prevState.filter((field) => field !== target.name)
     )
+
+    setEnterError(null)
   }
 
   const validatorConfig = {
@@ -80,13 +73,11 @@ const LoginForm: React.FunctionComponent = () => {
     const isValid = validate()
     if (!isValid) return
 
-    console.log(data)
-
     try {
       await logIn(data)
-      history.push('/')
     } catch (error: any) {
       setEnterError(error.message)
+      setValidFields([])
     }
   }
 
@@ -103,6 +94,7 @@ const LoginForm: React.FunctionComponent = () => {
         value={data.email}
         onChange={handleChange}
         error={errors.email}
+        enterError={enterError}
         isValid={isValidField('email')}
         autoFocus
       />
@@ -113,6 +105,7 @@ const LoginForm: React.FunctionComponent = () => {
         value={data.password}
         onChange={handleChange}
         error={errors.password}
+        enterError={enterError}
         isValid={isValidField('password')}
       />
       {enterError && <p className='enter-error'>{enterError}</p>}

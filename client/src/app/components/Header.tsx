@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from './common/Container'
 import { Link } from 'react-router-dom'
 import chevron from '../../svg/chevron-down-solid.svg'
@@ -7,6 +7,12 @@ import { useAuth } from '../hooks/useAuth'
 
 const Header = () => {
   const { currentUser } = useAuth()
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleMenu = () => {
+    setIsOpen((prevState) => !prevState)
+  }
 
   return (
     <div className='header'>
@@ -31,7 +37,10 @@ const Header = () => {
             {currentUser && (
               <div className='nav-buttons__item'>
                 <div className='nav-link'>
-                  <div className='nav__profile-menu profile-menu'>
+                  <div
+                    onClick={toggleMenu}
+                    className='nav__profile-menu profile-menu'
+                  >
                     <div className='profile-menu__photo'>
                       <Avatar src={currentUser.image} />
                     </div>
@@ -42,13 +51,15 @@ const Header = () => {
             )}
           </div>
 
-          <ul className='profile-menu__list menu-list'>
-            <li className='menu-list__item'>
-              <Link className='menu-link' to='/logout'>
-                Выйти
-              </Link>
-            </li>
-          </ul>
+          {isOpen && (
+            <ul className='profile-menu__list menu-list'>
+              <li className='menu-list__item'>
+                <Link className='menu-link' to='/logout' onClick={toggleMenu}>
+                  Выйти
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </Container>
     </div>
