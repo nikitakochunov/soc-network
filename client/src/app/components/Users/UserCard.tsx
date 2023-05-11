@@ -5,6 +5,9 @@ import TextMuted from '../common/TextMuted'
 import PhotoLink from '../common/PhotoLink'
 import UserLink from '../common/UserLink'
 import Avatar from '../common/Avatar'
+import { useAuth } from '../../hooks/useAuth'
+import { useUsers } from '../../hooks/useUser'
+import FriendButton from '../common/FriendButton'
 
 const UserCard: React.FunctionComponent<IUser> = ({
   _id,
@@ -34,7 +37,7 @@ const UserCard: React.FunctionComponent<IUser> = ({
             </div>
           </div>
           <div className='user-info__item'>
-            <Button>Добавить в друзья</Button>
+            <FriendButton userId={_id} />
           </div>
         </div>
       </div>

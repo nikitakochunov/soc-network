@@ -12,6 +12,7 @@ const UserProvider = ({ children }) => {
   const { currentUser } = useAuth()
 
   const [users, setUsers] = useState([])
+
   const [isLoading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -46,8 +47,56 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  const getUserFriends = (user) => {
+    return user.friends ? users.filter((u) => user.friends.includes(u._id)) : []
+  }
+
   const getUserById = (id) => {
     return users.find((user) => user._id === id)
+  }
+
+  const updateUsers = (data) => {
+    const newUsers = [...users]
+    const index = newUsers.findIndex((u) => u._id === data._id)
+
+    newUsers[index] = data
+
+    setUsers(newUsers)
+  }
+
+  const addFriend = async (id) => {
+    try {
+      const currentFriends = currentUser.friends ? [...currentUser.friends] : []
+
+      const newFriends = !currentFriends.includes(id)
+        ? [...currentFriends, id]
+        : currentFriends
+
+      const { content } = await userService.update({
+        ...currentUser,
+        friends: newFriends,
+      })
+
+      updateUsers(content)
+    } catch (error) {
+      catchError(error)
+    }
+  }
+
+  const deleteFriend = async (id) => {
+    try {
+      const currentFriends = [...currentUser.friends]
+      const newFriends = currentFriends.filter((fId) => fId !== id)
+
+      const { content } = await userService.update({
+        ...currentUser,
+        friends: newFriends || [],
+      })
+
+      updateUsers(content)
+    } catch (error) {
+      catchError(error)
+    }
   }
 
   const catchError = (error) => {
@@ -56,8 +105,10 @@ const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ users, getUserById }}>
-      {!isLoading ? children : 'Загрузка...'}
+    <UserContext.Provider
+      value={{ users, getUserById, getUserFriends, addFriend, deleteFriend }}
+    >
+      {children}
     </UserContext.Provider>
   )
 }

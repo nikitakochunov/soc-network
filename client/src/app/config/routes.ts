@@ -1,8 +1,8 @@
 import IRoute from '../interfaces/route'
-import UserLayout from '../layouts/ProfileLayout'
+import UserLayout from '../layouts/UserLayout'
+import FeedLayout from '../layouts/FeedLayout'
 import AuthPage from '../pages/AuthPage'
-import FeedPage from '../pages/FeedPage'
-import FriendsPage from '../pages/FriendsPage'
+import FriendsLayout from '../layouts/FriendsLayout'
 
 const routes: IRoute[] = [
   {
@@ -13,13 +13,13 @@ const routes: IRoute[] = [
   },
   {
     path: '/feed',
-    component: FeedPage,
+    component: FeedLayout,
     exact: true,
     isProtected: true,
   },
   {
     path: '/friends',
-    component: FriendsPage,
+    component: FriendsLayout,
     exact: true,
     isProtected: true,
   },

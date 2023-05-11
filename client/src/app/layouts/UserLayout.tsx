@@ -7,11 +7,7 @@ import UsersListPage from '../pages/UsersListPage'
 const UserLayout = () => {
   const { userId }: IParams = useParams()
 
-  if (userId) {
-    return <UserPage userId={userId} />
-  }
-
-  return <UsersListPage />
+  return <>{userId ? <UserPage userId={userId} /> : <UsersListPage />}</>
 }
 
 export default UserLayout

@@ -28,7 +28,8 @@
   padding: 0px 10px;
 
   display: flex;
-  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .nav-buttons__item:hover {
@@ -53,10 +54,6 @@
 .profile-menu__icon {
   width: 10px;
   height: 10px;
-}
-
-.nav-link {
-  align-self: center;
 }
 
 .menu-list {

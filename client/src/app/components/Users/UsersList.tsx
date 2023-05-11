@@ -1,26 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import IUser from '../../interfaces/user'
 import Wrapper from '../common/Wrapper'
 import UserCard from './UserCard'
 import Divider from '../common/Divider'
-import { useUsers } from '../../hooks/useUser'
 
-const UsersList: React.FunctionComponent<{}> = (): any => {
-  const { users } = useUsers()
+interface Props {
+  users: IUser[]
+}
 
-  if (!users) {
-    return 'Загрузка...'
-  }
-
+const UsersList: React.FunctionComponent<Props> = ({ users }): any => {
   return (
     <Wrapper>
       <div className='users-card-list'>
         {users.map((user: IUser, index: number) => {
-          const isLast = index !== users.length - 1
+          const isFirst = index === 0
 
           return (
             <>
-              {!isLast ? <Divider /> : ''}
+              {!isFirst ? <Divider /> : ''}
               <UserCard key={user._id} {...user} />
             </>
           )

@@ -7,14 +7,13 @@ import Avatar from './common/Avatar'
 import { useAuth } from '../hooks/useAuth'
 import { useUsers } from '../hooks/useUser'
 import IUser from '../interfaces/user'
+import FriendButton from './common/FriendButton'
 
 interface Props {
-  userId?: string
+  userId: string
 }
 
 const ProfileInfo: React.FunctionComponent<Props> = ({ userId }): any => {
-  const { currentUser } = useAuth()
-
   const { getUserById } = useUsers()
 
   const user: IUser = getUserById(userId)
@@ -49,13 +48,9 @@ const ProfileInfo: React.FunctionComponent<Props> = ({ userId }): any => {
             </div>
           </div>
         </div>
-        {user._id !== currentUser._id ? (
-          <div className='profile__item'>
-            <Button>Добавить в друзья</Button>
-          </div>
-        ) : (
-          ''
-        )}
+        <div className='profile__item'>
+          <FriendButton userId={userId} />
+        </div>
       </div>
     </Wrapper>
   )

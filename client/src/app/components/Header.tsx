@@ -13,23 +13,21 @@ const Header = () => {
       <Container>
         <div className='header__nav nav'>
           <div className='nav__item'>
-            <Link className='nav-link' to='/'>
+            <Link className='nav-buttons__item' to='/'>
               Социальная сеть
             </Link>
           </div>
 
           <div className='nav__item nav-buttons'>
-            <div className='nav-buttons__item'>
-              {currentUser ? (
-                <Link className='nav-link' to='/users'>
-                  Все пользователи
-                </Link>
-              ) : (
-                <Link className='nav-link' to='/auth'>
-                  Вход
-                </Link>
-              )}
-            </div>
+            {currentUser ? (
+              <Link className='nav-buttons__item' to='/users'>
+                Все пользователи
+              </Link>
+            ) : (
+              <Link className='nav-buttons__item' to='/auth'>
+                Вход
+              </Link>
+            )}
             {currentUser && (
               <div className='nav-buttons__item'>
                 <div className='nav-link'>

@@ -34,6 +34,10 @@ export const PostsProvider = ({ children }) => {
     }
   }
 
+  const getUserPosts = (userId) => {
+    return posts.filter((post) => post.userId === userId)
+  }
+
   const createPost = async (data) => {
     const post = {
       ...data,
@@ -41,10 +45,8 @@ export const PostsProvider = ({ children }) => {
       userId: currentUser._id,
       created_at: Date.now(),
     }
-    console.log(post)
     try {
       const { content } = await Postservice.createPost(post)
-      console.log(content)
       setPosts((prevState) => [...prevState, content])
     } catch (error) {
       catchError()
@@ -81,9 +83,10 @@ export const PostsProvider = ({ children }) => {
         createPost,
         removePost,
         isLoading,
+        getUserPosts,
       }}
     >
-      {children}
+      {!isLoading ? children : 'Загрузка...'}
     </PostsContext.Provider>
   )
 }

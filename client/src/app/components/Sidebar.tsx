@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ILink from '../interfaces/link'
+import { useAuth } from '../hooks/useAuth'
 
 const Sidebar: React.FunctionComponent<{}> = () => {
+  const { currentUser } = useAuth()
+
   const links: ILink[] = [
     {
-      to: '/users/123',
+      to: '/users/' + currentUser._id,
       text: 'Моя страница',
     },
     {

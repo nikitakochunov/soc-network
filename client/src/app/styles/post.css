@@ -64,6 +64,10 @@
 }
 
 .add-post {
+  margin-bottom: var(--block-margin);
+}
+
+.add-post-body {
   display: flex;
   /* align-items: center; */
 }
