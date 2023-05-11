@@ -11,7 +11,8 @@ const AuthContext = React.createContext()
 export const httpAuth = axios.create({
   baseURL: 'https://identitytoolkit.googleapis.com/v1/',
   params: {
-    key: process.env.REACT_APP_FIREBASE_KEY,
+    // key: process.env.REACT_APP_FIREBASE_KEY,
+    key: 'AIzaSyDKgrE4561N5DWzzQJBGg5w6NCZ7M2_P5c',
   },
 })
 

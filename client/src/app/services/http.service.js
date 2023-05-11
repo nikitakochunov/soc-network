@@ -1,7 +1,13 @@
 import axios from 'axios'
-import configFile from '../config.json'
+// import configFile from '../config.json'
 import { httpAuth } from '../hooks/useAuth'
 import localStorageService from './localStorage.service'
+
+const configFile = {
+  apiEndpoint:
+    'https://nk-soc-network-default-rtdb.europe-west1.firebasedatabase.app/',
+  isFirebase: true,
+}
 
 const http = axios.create({
   baseURL: configFile.apiEndpoint,
